@@ -2,6 +2,7 @@ package com.alibaba.ride.model.repository;
 
 import com.alibaba.ride.model.entity.Ride;
 import com.alibaba.ride.model.enums.RideStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface RideRepository extends JpaRepository<Ride, Long> {
     Optional<Ride> findByTransactionNoAndUsername(String tranNo, String username);
 
     Optional<Ride> findByTransactionNo(String tranNo);
+    List<Ride> findByDriverOrderByIdDesc(String driver, Pageable pageable);
 }

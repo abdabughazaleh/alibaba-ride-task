@@ -3,6 +3,7 @@ package com.alibaba.ride.controller;
 import com.alibaba.ride.model.dto.CreateRiderDTO;
 import com.alibaba.ride.model.dto.CreateRiderRespDTO;
 import com.alibaba.ride.service.RiderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RiderController {
     private final RiderService riderService;
     @PostMapping("/signup")
-    public ResponseEntity<CreateRiderRespDTO> signUp(@RequestBody CreateRiderDTO dto) {
+    public ResponseEntity<CreateRiderRespDTO> signUp(@Valid @RequestBody CreateRiderDTO dto) {
         CreateRiderRespDTO rider = this.riderService.createRider(dto);
         return ResponseEntity.ok(rider);
     }

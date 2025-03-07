@@ -3,8 +3,13 @@ package com.alibaba.ride.advice;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -12,7 +17,19 @@ public class ErrorHandler {
     public ResponseEntity<CustomBadRequestResponse> customBadRequestResponseEntity(CustomBadRequest request) {
         return new ResponseEntity<>(new CustomBadRequestResponse(request.getMessage(), request.getErrorCode()), HttpStatus.BAD_REQUEST);
     }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> {
+                    String fieldName = ((FieldError) error).getField();
+                    String message = error.getDefaultMessage();
+                    return fieldName + ": " + message;
+                })
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
     public record CustomBadRequestResponse(String message, String errorCode) {
 
     }

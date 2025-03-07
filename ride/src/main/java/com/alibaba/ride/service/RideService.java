@@ -17,4 +17,6 @@ public interface RideService {
     RideDTO acceptRide(String tranNo, String driver, String driverMobileNo);
 
     RideDTO completeRide(String tranNo);
+
+    List<RideDTO> getDriverRides(String driver, Integer pageNumber, Integer pageSize);
 }

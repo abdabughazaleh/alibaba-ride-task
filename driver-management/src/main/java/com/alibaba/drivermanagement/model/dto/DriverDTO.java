@@ -15,7 +15,7 @@ public class DriverDTO {
     private String name;
     private String username;
     private String licenseNumber;
-    private Integer rating;
+    private Double rating;
     private String mobileNo;
     private DriverStatus status;
 }

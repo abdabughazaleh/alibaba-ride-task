@@ -12,4 +12,6 @@ public interface DriverService {
     UpdateDriverStatusRespDTO updateDriverStatus(UpdateDriverStatusReqDTO reqDTO);
     List<DriverDTO> getDriversByStatus(DriverStatus status);
     DriverDTO getDriverDetailsByUsername(String username);
+    DriverDTO updateDriverRate(String username , Double newRate);
+   /* DriverDTO submitDriverRate(SubmitRateDTO dto);*/
 }

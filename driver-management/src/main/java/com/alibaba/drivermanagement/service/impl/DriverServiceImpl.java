@@ -8,10 +8,12 @@ import com.alibaba.drivermanagement.model.enums.Roles;
 import com.alibaba.drivermanagement.model.mapper.DriverMapper;
 import com.alibaba.drivermanagement.model.repository.DriverRepository;
 import com.alibaba.drivermanagement.proxy.AuthProxy;
+import com.alibaba.drivermanagement.service.DriverRatesService;
 import com.alibaba.drivermanagement.service.DriverService;
 import com.alibaba.drivermanagement.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -83,6 +85,21 @@ public class DriverServiceImpl implements DriverService {
         }
         return this.driverMapper.toDTO(driver.get());
     }
+
+    @Override
+    public DriverDTO updateDriverRate(String username, Double newRate) {
+        Optional<Driver> driver = this.driverRepository.findByUsername(username);
+        driver.orElseThrow(() -> new ErrorHandler.CustomBadRequest(ErrorHandler.SystemErrors.DRIVER_NOT_EXISTS));
+        driver.get().setRating(newRate);
+        Driver save = this.driverRepository.save(driver.get());
+        return this.driverMapper.toDTO(save);
+    }
+
+  /*  @Override
+    public DriverDTO submitDriverRate(SubmitRateDTO dto) {
+        this.driverRatesService.submitRate(dto);
+        return this.getDriverDetailsByUsername(dto.driver());
+    }*/
 
     private void validateIfDriverExist(String mobileNo) {
         Optional<Driver> driverO = this.driverRepository.findByMobileNo(mobileNo);

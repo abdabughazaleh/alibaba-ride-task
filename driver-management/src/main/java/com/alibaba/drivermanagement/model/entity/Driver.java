@@ -23,7 +23,7 @@ public class Driver {
     @Column(name = "license_number")
     private String licenseNumber;
     @Column(name = "rating" , nullable = true)
-    private Integer rating;
+    private Double rating;
     @Column(name = "mobile_no")
     private String mobileNo;
     @Enumerated(EnumType.STRING)

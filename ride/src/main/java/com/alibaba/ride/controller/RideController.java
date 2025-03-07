@@ -26,6 +26,14 @@ public class RideController {
         return ResponseEntity.ok(rideRespDTOS);
     }
 
+    @GetMapping("/driver-rides/{driver}")
+    public ResponseEntity<List<RideDTO>> getDriverRides(@PathVariable("driver") String driver,
+                                                        @RequestParam("pageNumber") Integer pageNumber,
+                                                        @RequestParam("pageSize") Integer pageSize) {
+        List<RideDTO> rideRespDTOS = this.rideService.getDriverRides(driver, pageNumber, pageSize);
+        return ResponseEntity.ok(rideRespDTOS);
+    }
+
     @PutMapping("/cancel/{tran_no}")
     public ResponseEntity<CancelRideRespDTO> cancelRide(@PathVariable("tran_no") String tranNo) {
         CancelRideRespDTO rideRespDTOS = this.rideService.cancelRide(tranNo);

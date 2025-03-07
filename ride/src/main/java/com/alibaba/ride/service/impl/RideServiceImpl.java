@@ -13,6 +13,7 @@ import com.alibaba.ride.service.RiderService;
 import com.alibaba.ride.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -105,6 +106,12 @@ public class RideServiceImpl implements RideService {
         ride.get().setStatus(RideStatus.COMPLETED);
         Ride save = this.rideRepository.save(ride.get());
         return this.rideMapper.toDTO(save);
+    }
+
+    @Override
+    public List<RideDTO> getDriverRides(String driver, Integer pageNumber, Integer pageSize) {
+        List<Ride> rides = this.rideRepository.findByDriverOrderByIdDesc(driver, PageRequest.of(pageNumber, pageSize));
+        return this.rideMapper.toDTOs(rides);
     }
 
     private void validateRideStatus(RideStatus status) {
