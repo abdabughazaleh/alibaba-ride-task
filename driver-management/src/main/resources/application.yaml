@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: driver-management
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ride-sharing
+    username: postgres
+    password: 379155
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
+
+rabbitmq:
+  queues:
+    request-ride: ride.requested
+    cancel-ride: ride.canceled
+  exchange:
+    name: ride.topic
+  routing:
+    accept-key: ride.accepted
+    complete-key: ride.completed
+server:
+  port: 8081
+springdoc:
+  api-docs:
+    path: /api-docs
