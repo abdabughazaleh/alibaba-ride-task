@@ -1,17 +1,34 @@
 server:
-  port: 8080
-
+  port: 8086
+  servlet:
+    context-path: /api
 spring:
+  main:
+    web-application-type: reactive
   application:
     name: api-gateway
   cloud:
     gateway:
       routes:
-        - id: driver-management
+        - id: driver-service
           uri: http://localhost:8081
           predicates:
-            - Path=/driver-management/**
-        - id: ride-booking-management
-          uri: http://localhost:8082
+            - Path=/driver-service/**
+
+        - id: ride-service
+          uri: http://localhost:8085
           predicates:
-            - Path=/rbm/**
+            - Path=/ride-service/rider/signup
+
+        - id: ride-service-secured
+          uri: http://localhost:8085
+          predicates:
+            - Path=/ride-service/ride/**
+          filters:
+            - name: JwtAuthFilter
+
+
+        - id: author-service
+          uri: http://localhost:8080
+          predicates:
+            - Path=/author/**

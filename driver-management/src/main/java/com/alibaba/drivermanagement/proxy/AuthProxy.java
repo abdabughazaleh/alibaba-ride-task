@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "AUTH-SERVER", url = "http://localhost:8080")
+@FeignClient(name = "AUTH-SERVER", url = "http://localhost:8080/author")
 public interface AuthProxy {
     @GetMapping("/api/user/is-exists/{username}")
     ResponseEntity<IsExistsRespDTO> checkIfUserExist(@PathVariable("username") String username);

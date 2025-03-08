@@ -15,4 +15,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   application:
     name: auth-server
-
+server:
+  servlet:
+    context-path: /author
