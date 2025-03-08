@@ -9,6 +9,7 @@ I created 4 microservices
  - Auth-Service
  - Ride-service
  - Driver-Service
+ - RabbitMQ server
 
 
 ## How to run
