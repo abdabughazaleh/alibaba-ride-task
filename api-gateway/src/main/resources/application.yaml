@@ -11,17 +11,17 @@ spring:
     gateway:
       routes:
         - id: driver-service
-          uri: http://localhost:8081
+          uri: http://driver-service:8081
           predicates:
             - Path=/driver-service/**
 
         - id: ride-service
-          uri: http://localhost:8085
+          uri: http://ride-service:8085
           predicates:
             - Path=/ride-service/rider/signup
 
         - id: ride-service-secured
-          uri: http://localhost:8085
+          uri: http://ride-service:8085
           predicates:
             - Path=/ride-service/ride/**
           filters:
@@ -29,7 +29,7 @@ spring:
 
 
         - id: author-service
-          uri: http://localhost:8080
+          uri: http://auth-service:8080
           predicates:
             - Path=/author/**
 secured:

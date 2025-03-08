@@ -1,0 +1,66 @@
+{
+  "vhosts": [
+    { "name": "/" }
+  ],
+    "users": [
+    {
+      "name": "admin",
+      "password_hash": "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",  
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "ride.topic",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true
+    }
+  ],
+  "queues": [
+    { "name": "ride.requested", "vhost": "/", "durable": true },
+    { "name": "ride.canceled", "vhost": "/", "durable": true },
+    { "name": "ride.accepted", "vhost": "/", "durable": true },
+    { "name": "ride.completed", "vhost": "/", "durable": true }
+  ],
+  "bindings": [
+    {
+      "source": "ride.topic",
+      "vhost": "/",
+      "destination": "ride.requested",
+      "destination_type": "queue",
+      "routing_key": "ride.requested"
+    },
+    {
+      "source": "ride.topic",
+      "vhost": "/",
+      "destination": "ride.canceled",
+      "destination_type": "queue",
+      "routing_key": "ride.canceled"
+    },
+    {
+      "source": "ride.topic",
+      "vhost": "/",
+      "destination": "ride.accepted",
+      "destination_type": "queue",
+      "routing_key": "ride.accepted"
+    },
+    {
+      "source": "ride.topic",
+      "vhost": "/",
+      "destination": "ride.completed",
+      "destination_type": "queue",
+      "routing_key": "ride.completed"
+    }
+  ]
+}

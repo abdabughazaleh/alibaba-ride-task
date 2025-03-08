@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Collections;
 import java.util.List;
 
-@FeignClient(name = "RIDE-SERVER", url = "http://localhost:8085/ride-service")
+@FeignClient(name = "RIDE-SERVER", url = "http://ride-service:8085/ride-service")
 public interface RideProxy {
     @GetMapping("/ride/driver-rides/{driver}")
     ResponseEntity<List<RideDTO>> getDriverRides(@PathVariable("driver") String driver,
