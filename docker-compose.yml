@@ -1,56 +1,89 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  api-gateway:
-    image: abdabughazale7/api-gateway-service:latest
-    container_name: api-gateway
-    ports:
-      - "8080:8080"
+  postgres:
+    image: postgres:17
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 379155
+      POSTGRES_DB: ride-sharing
+    ports:
+      - "5433:5433"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
     networks:
-      - app-network
+      - app_network
+
+  api-gateway:
+    image: abdabughazale7/api-gateway:latest
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/ride-sharing
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 379155
+    ports:
+      - "8086:8086"
+    networks:
+      - app_network
 
   auth-service:
     image: abdabughazale7/auth-service:latest
-    container_name: auth-service
-    ports:
-      - "8081:8081"
+    depends_on:
+      - postgres
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/ride-sharing
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 379155
+    ports:
+      - "8080:8080"
     networks:
-      - app-network
+      - app_network
 
   driver-service:
     image: abdabughazale7/driver-service:latest
-    container_name: driver-service
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - API_GATEWAY_URL=http://api-gateway:8080
-      - AUTH_SERVICE_URL=http://auth-service:8081
     depends_on:
-      - api-gateway
       - auth-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/ride-sharing
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 379155
+    ports:
+      - "8081:8081"
     networks:
-      - app-network
+      - app_network
 
   ride-service:
     image: abdabughazale7/ride-service:latest
-    container_name: ride-service
-    ports:
-      - "8083:8083"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - API_GATEWAY_URL=http://api-gateway:8080
-      - AUTH_SERVICE_URL=http://auth-service:8081
     depends_on:
-      - api-gateway
       - auth-service
+      - driver-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/ride-sharing
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 379155
+    ports:
+      - "8085:8085"
     networks:
-      - app-network
+      - app_network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin123"
+    ports:
+      - "8087:80" # pgAdmin will be accessible on localhost:8087
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
 
 networks:
-  app-network:
-    driver: bridge
+  app_network:

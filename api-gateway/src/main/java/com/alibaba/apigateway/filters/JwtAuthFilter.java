@@ -16,7 +16,7 @@ import java.security.Key;
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
 
-    @Value("${secured.key}")
+    @Value("${secured.sec}")
     private String SECRET_KEY;
 
     public JwtAuthFilter() {
