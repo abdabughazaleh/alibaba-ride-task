@@ -32,7 +32,7 @@ I created 4 microservices
  6. Rider can cancel order by sinding tranNo.
  7. Now login in driver account, and accept ride the status will be changed to (IN_PROGRESS).
  8. After complete ride, send complete request.
- 9. Now login as rider and rate ride. 
+ 9. Now login as rider and rate ride.
  
 
 ## [IMPORTANT] Justification
@@ -46,5 +46,5 @@ Why am I telling you this, the reason is that I did not finish everything requir
 - Enable drivers to upload or update verification documents (e.g., driver’s license, vehicle registration) .
   (I bought cloud s3 storage, but I faced technical issues, that is the cause of delay at this point and previous one ).
 - Ensure data replication between the primary and replica.
-
+- And Testing
 I hope you accept my apology and thank you. If you want me to continue contact with me I will do my best to do it.
