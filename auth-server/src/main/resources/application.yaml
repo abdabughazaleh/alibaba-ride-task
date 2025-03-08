@@ -18,3 +18,5 @@ spring:
 server:
   servlet:
     context-path: /author
+secured:
+  key: Asaaa51asf1gds1ASGF51ASDG5ad1g8sdag4158A1DSG85A1SD51asg

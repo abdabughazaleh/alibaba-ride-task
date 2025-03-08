@@ -62,3 +62,5 @@ resilience4j.circuitbreaker:
       permittedNumberOfCallsInHalfOpenState: 3
       minimumNumberOfCalls: 5
       eventConsumerBufferSize: 10
+secured:
+  key: Asaaa51asf1gds1ASGF51ASDG5ad1g8sdag4158A1DSG85A1SD51asg

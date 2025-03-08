@@ -1,8 +1,11 @@
 package com.alibaba.authserver.config;
+
 import com.alibaba.authserver.model.dto.AuthReqDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
@@ -10,7 +13,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "your-very-secure-and-long-secret-key-for-jwt-signing";
+    @Value("${secured.key}")
+    private String SECRET_KEY;
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
