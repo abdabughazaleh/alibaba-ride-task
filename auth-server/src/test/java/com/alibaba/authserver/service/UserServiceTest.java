@@ -46,6 +46,8 @@ class UserServiceTest {
                 .build());
         when(this.userService.auth(new AuthReqDTO("admin", "admin")))
                 .thenReturn(new AuthRespDTO("demo_token"));
+        when(this.userService.checkIfUserExist("admin"))
+                .thenReturn(new IsExistsRespDTO(true));
 
     }
 
@@ -63,5 +65,6 @@ class UserServiceTest {
     @Test
     void checkIfUserExist() {
         IsExistsRespDTO status = this.userService.checkIfUserExist("admin");
+        assertTrue(status.status());
     }
 }
