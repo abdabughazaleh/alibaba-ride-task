@@ -3,6 +3,7 @@ package com.alibaba.apigateway.filters;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +16,8 @@ import java.security.Key;
 @Component
 public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Config> {
 
-    private static final String SECRET_KEY = "your-very-secure-and-long-secret-key-for-jwt-signing";
+    @Value("${secured.key}")
+    private String SECRET_KEY;
 
     public JwtAuthFilter() {
         super(Config.class);
