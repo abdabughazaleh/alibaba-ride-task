@@ -47,4 +47,5 @@ Why am I telling you this, the reason is that I did not finish everything requir
   (I bought cloud s3 storage, but I faced technical issues, that is the cause of delay at this point and previous one ).
 - Ensure data replication between the primary and replica.
 - And Testing
-I hope you accept my apology and thank you. If you want me to continue contact with me I will do my best to do it.
+
+**I hope you accept my apology and thank you. If you want me to continue contact with me I will do my best to do it.**
