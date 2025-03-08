@@ -40,9 +40,10 @@ First of all,
 I tried hard to do what I could in two days and I actually worked on Friday (18 continuous hours) and Saturday (15 continuous hours) to finish this task, and the reason I worked in two days is that I was in Jordan before I received the task from you and for your information I took two days off (Wednesday and Thursday) before February 19 and February 20 of last month to finish the task but unfortunately the task was delayed, after that I traveled.
 
 Why am I telling you this, the reason is that I did not finish everything required...
-- I did not finish the followings:
-	- vehicle images.
-	- Enable drivers to upload or update verification documents (e.g., driver’s license, vehicle registration).
-	- Ensure data replication between the primary and replica.
+- I did not finish the following:
+- Vehicle images
+- Enable drivers to upload or update verification documents (e.g., driver’s license, vehicle registration) .
+  (I bought cloud s3 storage, but I faced technical issues, that is the cause of delay at this point and previous one ).
+- Ensure data replication between the primary and replica.
 
-I hope you accept my apology and thank you. If you want me to contiune contact with me I will do my best to do it.
+I hope you accept my apology and thank you. If you want me to continue contact with me I will do my best to do it.
