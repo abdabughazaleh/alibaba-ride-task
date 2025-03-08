@@ -13,13 +13,14 @@ I created 4 microservices
 
 
 ## How to run
-Create docker netwrok using this command : `docker network create app-network`
- - Run RabbitMQ docker-compose.yaml file by the following:
-	 - Go to this dircitory `rabbitmq-config` then run this command `docker-compose up` to make sure it's working fine check this url : http://localhost:15672/.
-	 - Now after running RabbitMQ server, we need to change password by command line : `docker exec -it rabbitmq rabbitmqctl change_password admin admin`.  (I added this extra steps because when I added configuration to generate queues and topics for RabbitMQ, not working, please note password and username must be (admin admin) )
-	 - Now we need to back to main folder `scalable-ride-sharing` and run this command line `docker-compose up`
-	 - Now go to http://localhost:15672/ and sign in (username :admin, password: admin).
-	 - Now we ready to testing
+- Clone project using this command line `git clone -b master https://github.com/abdabughazaleh/alibaba-ride-task.git`
+- Create docker netwrok using this command : `docker network create app-network`
+- Run RabbitMQ docker-compose.yaml file by the following:
+- Go to this dircitory `rabbitmq-config` then run this command `docker-compose up` to make sure it's working fine check this url : http://localhost:15672/.
+- Now after running RabbitMQ server, we need to change password by command line : `docker exec -it rabbitmq rabbitmqctl change_password admin admin`.  (I added this extra steps because when I added configuration to generate queues and topics for RabbitMQ, not working, please note password and username must be (admin admin) )
+- Now we need to back to main folder `scalable-ride-sharing` and run this command line `docker-compose up`
+- Now go to http://localhost:15672/ and sign in (username :admin, password: admin).
+- Now we ready to testing
 
 ## How to test
 
