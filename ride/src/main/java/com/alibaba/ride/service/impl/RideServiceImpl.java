@@ -7,6 +7,7 @@ import com.alibaba.ride.model.enums.RideStatus;
 import com.alibaba.ride.model.enums.TripStatus;
 import com.alibaba.ride.model.mapper.RideMapper;
 import com.alibaba.ride.model.repository.RideRepository;
+import com.alibaba.ride.proxy.DriverProxy;
 import com.alibaba.ride.service.RideRequestProducerService;
 import com.alibaba.ride.service.RideService;
 import com.alibaba.ride.service.RiderService;
@@ -28,6 +29,7 @@ public class RideServiceImpl implements RideService {
     private final JwtUtil jwtUtil;
     private final RideRequestProducerService rideRequestProducerService;
     private final RideMapper rideMapper;
+    private final DriverProxy driverProxy;
 
     @Override
     public PlaceRideRespDTO newRide(PlaceRideDTO dto) {
@@ -112,6 +114,26 @@ public class RideServiceImpl implements RideService {
     public List<RideDTO> getDriverRides(String driver, Integer pageNumber, Integer pageSize) {
         List<Ride> rides = this.rideRepository.findByDriverOrderByIdDesc(driver, PageRequest.of(pageNumber, pageSize));
         return this.rideMapper.toDTOs(rides);
+    }
+
+    @Override
+    public DriverDTO submitDriverRate(RequestDriverRateDTO reqDTO) {
+        String rider = jwtUtil.extractUsername();
+        Optional<Ride> transaction = this.rideRepository.findByTransactionNo(reqDTO.tranNo());
+        transaction.orElseThrow(() -> new ErrorHandler.CustomBadRequest(ErrorHandler.SystemErrors.TRANSACTION_NOT_FOUND));
+        if (transaction.get().getStatus() != RideStatus.COMPLETED) {
+            throw new ErrorHandler.CustomBadRequest(ErrorHandler.SystemErrors.CANNOT_RATE_UNCOMPLETED_RIDE);
+        }
+        if (!transaction.get().getUsername().equals(rider)) {
+            throw new ErrorHandler.CustomBadRequest(ErrorHandler.SystemErrors.NOT_ALLOWED_TO_RATE_THIS_RIDE);
+        }
+        SubmitRateDTO submitRateDTO = SubmitRateDTO.builder()
+                .rate(reqDTO.rate())
+                .driver(transaction.get().getDriver())
+                .tranNo(transaction.get().getTransactionNo())
+                .rider(transaction.get().getDriver())
+                .build();
+        return this.driverProxy.submitDriverRate(submitRateDTO).getBody();
     }
 
     private void validateRideStatus(RideStatus status) {

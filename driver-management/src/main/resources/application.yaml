@@ -47,6 +47,8 @@ management:
   health:
     circuitbreakers:
       enabled: true
+    rabbit:
+      enabled: true
 resilience4j.circuitbreaker:
   configs:
     default:

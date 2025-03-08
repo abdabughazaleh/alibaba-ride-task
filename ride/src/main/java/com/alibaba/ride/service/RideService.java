@@ -19,4 +19,6 @@ public interface RideService {
     RideDTO completeRide(String tranNo);
 
     List<RideDTO> getDriverRides(String driver, Integer pageNumber, Integer pageSize);
+
+    DriverDTO submitDriverRate(RequestDriverRateDTO reqDTO);
 }

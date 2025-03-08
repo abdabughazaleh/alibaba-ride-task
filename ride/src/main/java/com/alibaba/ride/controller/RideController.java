@@ -3,7 +3,10 @@ package com.alibaba.ride.controller;
 import com.alibaba.ride.model.dto.*;
 import com.alibaba.ride.model.enums.RideStatus;
 import com.alibaba.ride.service.RideService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +41,16 @@ public class RideController {
     public ResponseEntity<CancelRideRespDTO> cancelRide(@PathVariable("tran_no") String tranNo) {
         CancelRideRespDTO rideRespDTOS = this.rideService.cancelRide(tranNo);
         return ResponseEntity.ok(rideRespDTOS);
+    }
+
+    @PostMapping("/rate")
+    //@CircuitBreaker(name = "driverService", fallbackMethod = "authFallback")
+    public ResponseEntity<DriverDTO> updateDriverRate(@Valid @RequestBody RequestDriverRateDTO reqDTO) {
+        return ResponseEntity.ok(rideService.submitDriverRate(reqDTO));
+    }
+
+    public ResponseEntity<List<RideDTO>> authFallback(Throwable throwable) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(null);
     }
 }

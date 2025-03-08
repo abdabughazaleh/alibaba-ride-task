@@ -45,6 +45,8 @@ public class ErrorHandler {
         CANNOT_CANCEL_THIS_RIDE("You cannot cancel ride with the following situations (Already canceled ride, payment failed,or completed ride)", 1140),
         TOKEN_NOT_VALID("Token not valid", 1150),
         YOU_CANNOT_ACCEPT_THIS_RIDE("You cannot accept this ride, please wait another ride to accepted.", 1160),
+        NOT_ALLOWED_TO_RATE_THIS_RIDE("You are not allowed to rate this ride", 1170),
+        CANNOT_RATE_UNCOMPLETED_RIDE("Cannot rate uncompleted ride ", 1180),
         GENERAL_ERROR("Unknown general error occurred, please contact with support team", 100_000);
         private final static String ERROR_PREFIX = "R_";
         private final String message;
